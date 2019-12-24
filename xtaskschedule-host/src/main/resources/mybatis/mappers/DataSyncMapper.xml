@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tc.xtaskschedule.repository.mapper.DataSyncMapper">
+
+	<select id="executeCustomSql" parameterType="com.tc.xtaskschedule.service.task.dynamicsql.customsql.CustomSqlWrapper" useCache="false" resultType="com.tc.xtaskschedule.repository.po.mysql.DataSyncPo">
+		${sql}
+	</select>
+
+	<select id="executeFullCustomSql" parameterType="com.tc.xtaskschedule.service.task.dynamicsql.customsql.CustomSqlWrapper" useCache="false" resultType="java.util.HashMap">
+		${sql}
+	</select>
+
+	<select id="executeTableSqlEquals" parameterType="com.tc.xtaskschedule.service.task.dynamicsql.tablesql.TableSqlWrapper" useCache="false" resultType="com.tc.xtaskschedule.repository.po.mysql.DataSyncPo">
+		<if test="dbType == 'sqlserver'">
+			SELECT TOP (${topN})
+				${keyColumnName} as itemKey,
+				modifytime as dataChange_LastTime
+			FROM
+				${tableName}(NOLOCK)
+			WHERE
+				modifytime = '${maxTime_LastTime}' AND ${keyColumnName} > '${maxKey_LastTime}'
+			ORDER BY
+				dataChange_LastTime ASC, ${keyColumnName} ASC
+		</if>
+		<if test="dbType == 'mysql'">
+			SELECT
+				${keyColumnName} as itemKey,
+				modifytime as dataChange_LastTime
+			FROM
+				${tableName}
+			WHERE
+				modifytime = '${maxTime_LastTime}' and ${keyColumnName} > '${maxKey_LastTime}'
+			ORDER BY
+				dataChange_LastTime ASC, ${keyColumnName} ASC
+			LIMIT ${topN}
+		</if>
+	</select>
+
+	<select id="executeTableSqlGreater" parameterType="com.tc.xtaskschedule.service.task.dynamicsql.tablesql.TableSqlWrapper" useCache="false" resultType="com.tc.xtaskschedule.repository.po.mysql.DataSyncPo">
+		<if test="dbType == 'sqlserver'">
+			SELECT TOP (${topN})
+				${keyColumnName} as itemKey,
+				modifytime as dataChange_LastTime
+			FROM
+				${tableName}(NOLOCK)
+			WHERE
+				modifytime > '${maxTime_LastTime}'
+			ORDER BY
+				dataChange_LastTime ASC, ${keyColumnName} ASC
+		</if>
+		<if test="dbType == 'mysql'">
+			SELECT
+				${keyColumnName} as itemKey,
+				modifytime as dataChange_LastTime
+			FROM
+				${tableName}
+			WHERE
+				modifytime > '${maxTime_LastTime}'
+			ORDER BY
+				dataChange_LastTime ASC, ${keyColumnName} ASC
+			LIMIT ${topN}
+		</if>
+	</select>
+
+	<select id="executeFullTableSqlEquals" parameterType="com.tc.xtaskschedule.service.task.dynamicsql.tablesql.TableSqlWrapper" useCache="false" resultType="java.util.HashMap">
+		<if test="dbType == 'sqlserver'">
+			SELECT TOP (${topN})
+				*,
+				${keyColumnName} as itemKey,
+				modifytime as dataChange_LastTime
+			FROM
+				${tableName}(NOLOCK)
+			WHERE
+				modifytime = '${maxTime_LastTime}' AND ${keyColumnName} > '${maxKey_LastTime}'
+			ORDER BY
+				dataChange_LastTime ASC, ${keyColumnName} ASC
+		</if>
+		<if test="dbType == 'mysql'">
+			SELECT
+				*,
+				${keyColumnName} as itemKey,
+				modifytime as dataChange_LastTime
+			FROM
+				${tableName}
+			WHERE
+				modifytime = '${maxTime_LastTime}' and ${keyColumnName} > '${maxKey_LastTime}'
+			ORDER BY
+				dataChange_LastTime ASC, ${keyColumnName} ASC
+			LIMIT ${topN}
+		</if>
+	</select>
+
+	<select id="executeFullTableSqlGreater" parameterType="com.tc.xtaskschedule.service.task.dynamicsql.tablesql.TableSqlWrapper" useCache="false" resultType="java.util.HashMap">
+		<if test="dbType == 'sqlserver'">
+			SELECT TOP (${topN})
+				*,
+				${keyColumnName} as itemKey,
+				modifytime as dataChange_LastTime
+			FROM
+				${tableName}(NOLOCK)
+			WHERE
+				modifytime > '${maxTime_LastTime}'
+			ORDER BY
+				dataChange_LastTime ASC, ${keyColumnName} ASC
+		</if>
+		<if test="dbType == 'mysql'">
+			SELECT
+				*,
+				${keyColumnName} as itemKey,
+				modifytime as dataChange_LastTime
+			FROM
+				${tableName}
+			WHERE
+				modifytime > '${maxTime_LastTime}'
+			ORDER BY
+				dataChange_LastTime ASC, ${keyColumnName} ASC
+			LIMIT ${topN}
+		</if>
+	</select>
+
+</mapper>

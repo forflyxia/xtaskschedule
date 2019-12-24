@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tc.xtaskschedule.repository.mapper.mysql.taskdb.TaskTodoItemsMapper">
+
+	<insert id="backupTaskTodoItems">
+		INSERT INTO task_task_todo_items_bak SELECT * FROM task_task_todo_items WHERE `Status` = 0 OR `Priority` > 100;
+		DELETE FROM task_task_todo_items WHERE `Status` = 0 OR `Priority` > 100;
+	</insert>
+
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tc.xtaskschedule.repository.mapper.mysql.taskdb.TaskMapper">
+
+	<select id="getTasks" resultType="com.tc.xtaskschedule.repository.po.mysql.taskdb.TaskPo">
+		SELECT * FROM task_task WHERE Status = 1;
+	</select>
+
+	<select id="getTaskIncrement" parameterType="Integer" resultType="com.tc.xtaskschedule.repository.po.mysql.taskdb.TaskIncrementPo">
+		SELECT * FROM task_task_increment WHERE TaskId = #{taskId} AND Status = 1;
+	</select>
+
+	<select id="getTaskTodoItems" resultType="com.tc.xtaskschedule.repository.po.mysql.taskdb.TaskTodoItemsPo">
+		SELECT * FROM task_task_todo_items WHERE TaskId = #{taskId} AND ShardingNo = #{shardingNo} AND Status = 1 ORDER BY Priority ASC;
+	</select>
+
+	<select id="getTaskTodoItemsCount" parameterType="Integer" resultType="Integer">
+		SELECT count(1) FROM task_task_todo_items WHERE TaskId = #{taskId} AND Status = 1;
+	</select>
+
+	<insert id="insertTaskIncrement" parameterType="com.tc.xtaskschedule.repository.po.mysql.taskdb.TaskIncrementPo">
+		INSERT INTO task_task_increment (
+			`TaskId`,
+			`MinKey_LastTime`,
+			`MinTime_LastTime`,
+			`MaxKey_LastTime`,
+			`MaxTime_LastTime`,
+			`HasNewData`,
+			`Status`)
+		VALUES (
+			${taskId},
+			'${minKey_LastTime}',
+			'${minTime_LastTime}',
+			'${maxKey_LastTime}',
+			'${maxTime_LastTime}',
+			${hasNewData},
+			${status});
+	</insert>
+
+	<update id="updateTaskIncrement" parameterType="com.tc.xtaskschedule.repository.po.mysql.taskdb.TaskIncrementPo">
+		UPDATE
+			task_task_increment
+		SET
+			MinKey_LastTime = '${minKey_LastTime}',
+			MinTime_LastTime = '${minTime_LastTime}',
+			MaxKey_LastTime = '${maxKey_LastTime}',
+			MaxTime_LastTime = '${maxTime_LastTime}',
+			HasNewData = ${hasNewData}
+		WHERE
+			TaskId = ${taskId};
+	</update>
+
+	<insert id="batchInsertTaskTodoItems" parameterType="java.util.List">
+		INSERT INTO task_task_todo_items (
+			`BatchNo`,
+			`TaskId`,
+			`ItemKey`,
+			`ItemKey_DataChange_LastTime`,
+			`ExtendData`,
+			`ShardingNo`,
+			`Status`)
+		VALUES
+			 <foreach collection ="list" item="item" index= "index" separator =",">
+				 (
+				 #{item.batchNo},
+				 #{item.taskId},
+				 #{item.itemKey},
+				 #{item.itemKey_DataChange_LastTime},
+				 #{item.extendData},
+				 #{item.shardingNo},
+				 #{item.status}
+				 )
+			 </foreach >
+	</insert>
+
+	<update id="updateTaskTodoItemsStatus">
+		UPDATE
+			task_task_todo_items
+		SET
+			Status = ${status},
+			Priority = Priority + 1
+		WHERE
+			Id = ${id};
+	</update>
+
+	<update id="updateTaskTodoItemsRemark">
+		UPDATE
+			task_task_todo_items
+		SET
+			Remark= '${remark}',
+			Priority = Priority + 1
+		WHERE
+			Id = ${id};
+	</update>
+
+</mapper>

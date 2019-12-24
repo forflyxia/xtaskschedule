@@ -1,0 +1,14 @@
+server:
+  port: 8888
+  context-path: /xtaskschedule
+  compression:
+    enabled: true
+spring:
+  freemarker:
+    template-loader-path: classpath:/web/
+    cache: false
+    charset: UTF-8
+
+management:
+  security:
+    enabled: false

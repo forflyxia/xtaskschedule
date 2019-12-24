@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <springProperty scope="context" name="logstashServer" source="spring.log.logstash.server"/>
+    <springProperty scope="context" name="logLevel" source="spring.log.level"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/var/log/sys/xtaskschedule/xtaskschedule.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/var/log/sys/xtaskschedule/xtaskschedule-%d{yyyy-MM-dd-HH}.log.zip</fileNamePattern>
+            <maxHistory>20</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %logger{5} - %msg%n</pattern>
+        </encoder>
+        <append>true</append>
+        <prudent>false</prudent>
+    </appender>
+
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>${logstashServer}</destination>
+        <reconnectionDelay>1 second</reconnectionDelay>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+
+    <logger name="org.springframework.web" level="WARN"/>
+    <logger name="org.springframework.web.servlet.mvc.method.annotation" level="WARN"/>
+    <logger name="com.tc.xtaskschedule">
+        <level value="${logLevel}"/>
+        <!--<appender-ref ref="LOGSTASH"/>-->
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>

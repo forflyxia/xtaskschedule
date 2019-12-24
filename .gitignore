@@ -1,0 +1,16 @@
+*.iml
+.idea/
+out/
+target/
+.classpath
+.project
+.settings
+.externalToolBuilders
+Thumbs.db
+classes/
+*.pid
+bin/
+build/
+.metadata/
+logs/
+__ConfigTemp/

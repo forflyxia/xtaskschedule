@@ -1,0 +1,116 @@
+spring:
+  log:
+    level: INFO
+    logstash:
+      server: logstashserver:4560
+  datasource:
+    taskdb:
+      master:
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://xxx:3306/task_db?characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+        username: username
+        password: password
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 3000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: true
+        testOnReturn: true
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: stat
+    productdb:
+          master:
+            driverClassName: com.mysql.jdbc.Driver
+            url: jdbc:mysql://xxx:3306/product_db?characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+            username: username
+            password: password
+            initialSize: 5
+            minIdle: 5
+            maxActive: 20
+            maxWait: 60000
+            timeBetweenEvictionRunsMillis: 60000
+            minEvictableIdleTimeMillis: 3000
+            validationQuery: SELECT 1 FROM DUAL
+            testWhileIdle: true
+            testOnBorrow: true
+            testOnReturn: true
+            poolPreparedStatements: true
+            maxPoolPreparedStatementPerConnectionSize: 20
+            filters: stat
+    orderdb:
+          master:
+            driverClassName: com.mysql.jdbc.Driver
+            url: jdbc:mysql://xxx:3306/order_db?characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+            username: username
+            password: password
+            initialSize: 5
+            minIdle: 5
+            maxActive: 20
+            maxWait: 60000
+            timeBetweenEvictionRunsMillis: 60000
+            minEvictableIdleTimeMillis: 3000
+            validationQuery: SELECT 1 FROM DUAL
+            testWhileIdle: true
+            testOnBorrow: true
+            testOnReturn: true
+            poolPreparedStatements: true
+            maxPoolPreparedStatementPerConnectionSize: 20
+            filters: stat
+    searchdb:
+            master:
+              driverClassName: com.mysql.jdbc.Driver
+              url: jdbc:mysql://xxx:3306/search_db?characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+              username: username
+              password: password
+              initialSize: 5
+              minIdle: 5
+              maxActive: 20
+              maxWait: 60000
+              timeBetweenEvictionRunsMillis: 60000
+              minEvictableIdleTimeMillis: 3000
+              validationQuery: SELECT 1 FROM DUAL
+              testWhileIdle: true
+              testOnBorrow: true
+              testOnReturn: true
+              poolPreparedStatements: true
+              maxPoolPreparedStatementPerConnectionSize: 20
+              filters: stat
+    messagedb:
+            master:
+              driverClassName: com.mysql.jdbc.Driver
+              url: jdbc:mysql://xxx:3306/message_db?characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+              username: username
+              password: password
+              initialSize: 5
+              minIdle: 5
+              maxActive: 20
+              maxWait: 60000
+              timeBetweenEvictionRunsMillis: 60000
+              minEvictableIdleTimeMillis: 3000
+              validationQuery: SELECT 1 FROM DUAL
+              testWhileIdle: true
+              testOnBorrow: true
+              testOnReturn: true
+              poolPreparedStatements: true
+              maxPoolPreparedStatementPerConnectionSize: 20
+              filters: stat
+              
+xxl:
+  job:
+    admin:
+        addresses: http://10.58.xxx.xxx:8080/task
+    executor:
+      appname: xtaskschedule-executor
+      ip:
+      port: 9015
+      logpath: /apptmp/
+    enable: true
+    accessToken:
+
+
+

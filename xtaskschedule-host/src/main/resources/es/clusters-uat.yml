@@ -1,0 +1,5 @@
+clusters:
+  escluster1:
+    esClusterName: "escluster1"
+    transportSniff: true
+    address: ["10.58.9.221:9200"]
