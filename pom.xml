@@ -20,7 +20,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<springframework.boot.version>1.5.8.RELEASE</springframework.boot.version>
+		<springframework.boot.version>2.2.2.RELEASE</springframework.boot.version>
 		<netty3.version>3.10.5.Final</netty3.version>
 		<zk.client.version>0.10</zk.client.version>
 		<mysql-connector-version>5.1.44</mysql-connector-version>
