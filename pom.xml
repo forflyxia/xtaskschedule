@@ -23,7 +23,7 @@
 		<springframework.boot.version>1.5.8.RELEASE</springframework.boot.version>
 		<netty3.version>3.10.5.Final</netty3.version>
 		<zk.client.version>0.10</zk.client.version>
-		<mysql-connector-version>5.1.44</mysql-connector-version>
+		<mysql-connector-version>8.0.28</mysql-connector-version>
 		<logstash.version>4.11</logstash.version>
 		<commons-lang3.version>3.3.2</commons-lang3.version>
 		<ribbon.version>2.2.4</ribbon.version>
